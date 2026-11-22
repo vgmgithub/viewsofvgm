@@ -148,6 +148,11 @@
   .play{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);padding:10px 16px;border-radius:12px;font-weight:700;font-size:14px;transition:.25s;align-self:flex-start}
   .play:hover{background:var(--yellow)}
   .play svg{width:20px;height:20px}
+  .app-actions{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .soon-btn{background:var(--yellow)}
+  .soon-btn:hover{background:#fff}
+  .web{font-size:12px;font-weight:600;color:#bdbdbd;border-bottom:1px dashed #555;padding-bottom:2px;transition:.2s;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  .web:hover{color:var(--yellow);border-color:var(--yellow)}
   .notify{display:inline-flex;align-items:center;gap:8px;border:1px dashed #555;color:#aaa;padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;align-self:flex-start}
 
   /* INSTAGRAM */
@@ -394,18 +399,21 @@ const INSTAGRAM_POSTS = [
   // (RIP / tribute posts are left out on purpose)
 ].slice(0, 3);
 
-/* Replace "url" with your exact Play Store app link when you have it. */
+/* Each app has its own website on a subdomain: https://<sub>.<SITE_DOMAIN>/
+   Change SITE_DOMAIN to your real domain, or set "site" on an app to a full URL. */
+const SITE_DOMAIN = "viewsofvgm.com";
+const sub = s => `https://${s}.${SITE_DOMAIN}/`;
 const APPS = [
   {name:"MyNotes", icon:"assets/apps/mynotes.png", color:"#c8f2dc", status:"live",
    desc:"Track your money simply: note expenses and savings, and see where every rupee goes.",
-   url:"https://play.google.com/store/apps/details?id=com.viewsofvgm.mynotes"},
+   url:"https://play.google.com/store/apps/details?id=com.viewsofvgm.mynotes", site:sub("mynotes")},
   {name:"HabitSeven", icon:"assets/apps/habitseven.png", color:"#5b21b6", status:"live",
    desc:"Build better habits seven days at a time with streaks and simple tracking.",
-   url:"https://play.google.com/store/apps/details?id=com.viewsofvgm.habitseven"},
+   url:"https://play.google.com/store/apps/details?id=com.viewsofvgm.habitseven", site:sub("habitseven")},
   {name:"ThilluMullu", icon:"assets/apps/thillumullu.webp", color:"#7c3aed", status:"soon",
-   desc:"Tamil Pictionary! Draw, guess and laugh together with friends and family.", url:""},
+   desc:"Tamil Pictionary! Draw, guess and laugh together with friends and family.", url:"", site:sub("thillumullu")},
   {name:"DreamBucket", icon:"assets/apps/dreambucket.webp", color:"#a78bfa", status:"soon",
-   desc:"Your bucket list, organised — plan, track and tick off your dreams.", url:""},
+   desc:"Your bucket list, organised — plan, track and tick off your dreams.", url:"", site:sub("dreambucket")},
 ];
 
 const YOUTUBE_URL = "https://www.youtube.com/@viewsofvgm/";
@@ -512,11 +520,15 @@ document.getElementById("appGrid").innerHTML=APPS.map(a=>`
     <span class="by">VGMStudios</span>
     <h4>${a.name}</h4>
     <p>${a.desc}</p>
+    <div class="app-actions">
     ${a.status==="live"
-      ?`<a class="play" href="${a.url}" target="_blank" rel="noopener">${playSvg}Get it on Google Play</a>`
-      :`<a class="notify" href="${INSTAGRAM_URL}" target="_blank" rel="noopener">🔔 Follow for launch news</a>`}
+      ?`<a class="play" href="${a.url}" target="_blank" rel="noopener">${playSvg}Get it on Google Play</a>
+        <a class="web" href="${a.site}" target="_blank" rel="noopener">🌐 ${a.site.replace(/^https?:\/\/|\/$/g,"")}</a>`
+      :`<a class="play soon-btn" href="${a.site}" target="_blank" rel="noopener">🚀 Visit website</a>
+        <a class="web" href="${a.site}" target="_blank" rel="noopener">🌐 ${a.site.replace(/^https?:\/\/|\/$/g,"")}</a>`}
+    </div>
   </div>`).join("");
-document.getElementById("footApps").innerHTML=APPS.map(a=>`<li><a href="${a.url||'#apps'}" ${a.url?'target="_blank" rel="noopener"':''}>${a.name}${a.status==="soon"?" (soon)":""}</a></li>`).join("");
+document.getElementById("footApps").innerHTML=APPS.map(a=>`<li><a href="${a.site}" target="_blank" rel="noopener">${a.name}${a.status==="soon"?" (soon)":""}</a></li>`).join("");
 
 const feed=document.getElementById("igFeed");
 if(INSTAGRAM_POSTS.length){
