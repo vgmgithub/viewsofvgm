@@ -260,7 +260,7 @@
       </div>
       <div class="stats">
         <div><b><span id="followers">0</span>+</b><span>Instagram followers <em class="live-dot" id="followersLive" hidden>LIVE</em></span></div>
-        <div><b>12</b><span>Content categories</span></div>
+        <div><b>13</b><span>Content categories</span></div>
         <div><b>4</b><span>VGMStudios apps</span></div>
         <div><b>2</b><span>Live on Play Store</span></div>
       </div>
@@ -321,8 +321,8 @@
 <section id="instagram">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div><span class="eyebrow">@viewsofvgm</span><h2 class="display">Latest on Instagram</h2></div>
-      <p>Fresh takes every week. Tap any post to open it on Instagram and share your view.</p>
+      <div><span class="eyebrow">@viewsofvgm</span><h2 class="display">Most loved this month</h2></div>
+      <p>The posts that got the biggest response from you recently. Watch them here and share your view.</p>
     </div>
     <div id="igFeed"></div>
     <div class="ig-cta reveal">
@@ -379,19 +379,13 @@
 /* ================= EDIT HERE ================= */
 const INSTAGRAM_URL = "https://www.instagram.com/viewsofvgm/";
 
-/* Paste Instagram post/reel links here to embed them (open post → ⋯ → Copy link).
-   Example: "https://www.instagram.com/p/ABC123xyz/"  or  "https://www.instagram.com/reel/XYZ789/" */
+/* "Most loved" section: your 3 recent posts with the biggest response (keep it to 3).
+   Paste post/reel links (open post → ⋯ → Copy link). Picked 22 Nov 2026 from the last ~5 weeks. */
 const INSTAGRAM_POSTS = [
-  "https://www.instagram.com/p/DfkGAr8zmBS/",
-  "https://www.instagram.com/p/DX_hUpcgUGm/",
-  "https://www.instagram.com/p/Df9UhmezUuj/",
-  "https://www.instagram.com/p/Df9P8skhrIp/",
-  "https://www.instagram.com/p/Df7jQSUTumF/",
-  "https://www.instagram.com/p/Df61HFGBPqp/",
-  "https://www.instagram.com/p/Df4-FYCz2Bt/",
-  "https://www.instagram.com/p/Df4z25ozjoI/",
-  "https://www.instagram.com/p/Df4yQwwz22H/",
-];
+  "https://www.instagram.com/p/De55DtDz71N/",  // Chef Dhamu — 149 likes
+  "https://www.instagram.com/p/De6K4bVzJJI/",  // OTT update — 55 likes, 3 comments
+  "https://www.instagram.com/p/DfNRyTlTXQM/",  // Bigg Boss — 41 likes
+].slice(0, 3);
 
 /* Replace "url" with your exact Play Store app link when you have it. */
 const APPS = [
@@ -440,6 +434,8 @@ const CATEGORIES = [
    posts:["reel/DehcndRT3qM","p/DbvhDAlBYCk","p/DbdaHilTMMC","p/DbbQ4WcTqek"]},
   {ico:"🚦", name:"Public Sense", desc:"Civic sense, safety and awareness.", highlight:HL("18142098346595999"),
    posts:["p/DdL7rR_zmtG","reel/DcgjZ9LhVUy","p/DbtRe0tBPCJ","reel/DbsdoWVhq5R","p/DbFDOxHBGvz","p/Da2dQTeByKa"]},
+  {ico:"🏆", name:"Recognition", desc:"Tributes and shout-outs to people who earned it.", highlight:HL("18053987954576298"),
+   posts:["p/Df7jQSUTumF","p/Df1r5KjzZmn","p/DfNRyTlTXQM","p/De55DtDz71N","p/DfGaibYzNU7","p/DcTpVv0TJzk","p/DcOphYKz_s8","p/Da2dQTeByKa"]},
 ];
 /* ============================================= */
 
