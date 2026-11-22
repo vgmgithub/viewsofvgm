@@ -100,6 +100,33 @@
   .cat h4{font-family:"Bebas Neue";font-size:32px;letter-spacing:.5px;margin-top:18px}
   .cat p{font-size:14px;color:var(--muted);transition:.3s}
   .cat:hover p{color:#bdbdbd}
+  button.cat{font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%}
+  .cat-go{margin-top:14px;font-size:13px;font-weight:800;letter-spacing:.5px;display:inline-block;background:var(--yellow);color:var(--ink);padding:5px 12px;border-radius:999px;align-self:flex-start}
+  .live-dot{font-style:normal;font-size:10px;font-weight:800;color:#e11d48;margin-left:4px;letter-spacing:1px}
+  .live-dot::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#e11d48;margin-right:4px;animation:blink 1.2s infinite}
+  @keyframes blink{50%{opacity:.2}}
+  .creator-chip{display:inline-flex;align-items:center;gap:12px;margin-top:26px;background:var(--cream);border:1px solid var(--line);padding:6px 18px 6px 6px;border-radius:999px;font-size:14px}
+  .creator-chip img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid var(--yellow)}
+  /* slideshow */
+  .slides{position:fixed;inset:0;z-index:100;background:rgba(10,10,10,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+  .slides.open{display:flex;animation:fade .25s}
+  @keyframes fade{from{opacity:0}}
+  .slide-box{background:#fff;border-radius:24px;width:min(560px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;padding:18px 18px 20px;box-shadow:10px 10px 0 var(--yellow)}
+  .slide-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .slide-head h3{font-size:34px}
+  .slide-x{border:0;background:var(--ink);color:#fff;width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer}
+  .slide-stage{display:flex;align-items:center;gap:8px;min-height:0;flex:1}
+  .slide-frame{flex:1;position:relative;height:min(600px,calc(100vh - 230px));border-radius:14px;overflow:hidden;background:var(--cream)}
+  .slide-frame iframe{position:relative;width:100%;height:100%;border:0;background:transparent}
+  .slide-loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-weight:600}
+  .slide-nav{flex:none;width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);background:#fff;font-size:26px;line-height:1;cursor:pointer;transition:.2s}
+  .slide-nav:hover{background:var(--yellow)}
+  .slide-foot{display:flex;justify-content:space-between;align-items:center;margin:12px 4px 0;font-weight:700;font-size:14px}
+  .slide-dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .slide-dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+  .slide-dots i.on{background:var(--ink);width:22px;border-radius:9px}
+  .slide-links{display:flex;gap:10px;margin-top:14px}
+  .slide-links .btn{flex:1;justify-content:center;padding:11px 14px;font-size:14px}
   .cat .tag{position:absolute;top:22px;right:22px;font-size:11px;font-weight:800;letter-spacing:1.5px;background:var(--yellow);color:var(--ink);padding:4px 10px;border-radius:999px}
 
   /* APPS */
@@ -186,6 +213,13 @@
     .ig-cta .btn{width:100%;justify-content:center}
     .qr{max-width:220px}
     .copy{flex-direction:column;text-align:center}
+    .slides{padding:0}
+    .slide-box{border-radius:0;max-height:100vh;height:100%;box-shadow:none;padding:14px}
+    .slide-frame{height:auto;min-height:0;align-self:stretch}
+    .slide-stage{position:relative}
+    .slide-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:36px;height:36px;font-size:22px;background:rgba(255,255,255,.92)}
+    #slidePrev{left:6px} #slideNext{right:6px}
+    .creator-chip{font-size:13px}
   }
   @media (max-width:380px){
     .wrap{padding:0 16px}
@@ -204,6 +238,7 @@
       <a href="#categories">Shows</a>
       <a href="#apps">VGMStudios</a>
       <a href="#instagram">Instagram</a>
+      <a data-yt target="_blank" rel="noopener">YouTube</a>
     </div>
     <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </nav>
@@ -217,10 +252,15 @@
       <p class="lead">Views of VGM started as a podcast and grew into a place for news, trending topics, honest reviews and bold opinions — and the home of VGMStudios apps.</p>
       <div class="hero-actions">
         <a class="btn btn-dark" data-ig target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>Follow @viewsofvgm</a>
-        <a class="btn btn-ghost" href="#apps">Explore our apps</a>
+        <a class="btn btn-ghost" data-yt target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>YouTube</a>
+      </div>
+      <div class="creator-chip" id="creatorChip">
+        <img src="assets/host.jpg" alt="Creator of Views of VGM" onerror="document.getElementById('creatorChip').remove()">
+        <span>Hosted by <b>VGM</b> · creator &amp; podcaster</span>
       </div>
       <div class="stats">
-        <div><b>7+</b><span>Content categories</span></div>
+        <div><b><span id="followers">0</span>+</b><span>Instagram followers <em class="live-dot" id="followersLive" hidden>LIVE</em></span></div>
+        <div><b>12</b><span>Content categories</span></div>
         <div><b>4</b><span>VGMStudios apps</span></div>
         <div><b>2</b><span>Live on Play Store</span></div>
       </div>
@@ -262,7 +302,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div><span class="eyebrow">What we post</span><h2 class="display">Our shows & series</h2></div>
-      <p>Pick a format and jump in. Every post is built to start a conversation in the comments.</p>
+      <p>Tap a category to swipe through its posts right here, or watch the full highlight on Instagram.</p>
     </div>
     <div class="cats" id="cats"></div>
   </div>
@@ -289,12 +329,37 @@
       <div>
         <h3 class="display">Scan. Follow.<br>Join the debate.</h3>
         <p>News, trending topics, MyViews, Do You Agree?, What If, Reviews and OTT Updates — all on our Instagram.</p>
-        <a class="btn btn-dark" data-ig target="_blank" rel="noopener">Open Instagram →</a>
+        <div class="hero-actions">
+          <a class="btn btn-dark" data-ig target="_blank" rel="noopener">Open Instagram →</a>
+          <a class="btn btn-ghost" data-yt target="_blank" rel="noopener">Subscribe on YouTube</a>
+        </div>
       </div>
       <a class="qr" data-ig target="_blank" rel="noopener"><img src="assets/instagram-qr.jpg" alt="Instagram QR code for @viewsofvgm"></a>
     </div>
   </div>
 </section>
+
+<div class="slides" id="slides" role="dialog" aria-modal="true" aria-labelledby="slideTitle">
+  <div class="slide-box">
+    <div class="slide-head">
+      <h3 class="display" id="slideTitle"></h3>
+      <button class="slide-x" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="slide-stage">
+      <button class="slide-nav" id="slidePrev" aria-label="Previous post">‹</button>
+      <div class="slide-frame" id="slideFrame"></div>
+      <button class="slide-nav" id="slideNext" aria-label="Next post">›</button>
+    </div>
+    <div class="slide-foot">
+      <span id="slideCount"></span>
+      <div class="slide-dots" id="slideDots"></div>
+    </div>
+    <div class="slide-links">
+      <a class="btn btn-dark" id="slideHl" target="_blank" rel="noopener">◉ Watch highlight</a>
+      <a class="btn btn-ghost" id="slideOpen" target="_blank" rel="noopener">Open post ↗</a>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="wrap">
@@ -303,7 +368,7 @@
         <a href="#" class="brand"><span class="dot"><svg viewBox="0 0 24 24" fill="#0d0d0d"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></span>Views of VGM</a>
         <p style="margin-top:14px;max-width:340px">Every views &amp; opinion matters. A podcast-born media brand and the home of VGMStudios.</p>
       </div>
-      <div><h6>Explore</h6><ul><li><a href="#about">About</a></li><li><a href="#categories">Shows</a></li><li><a href="#apps">Apps</a></li><li><a href="#instagram">Instagram</a></li></ul></div>
+      <div><h6>Explore</h6><ul><li><a href="#about">About</a></li><li><a href="#categories">Shows</a></li><li><a href="#apps">Apps</a></li><li><a data-ig target="_blank" rel="noopener">Instagram</a></li><li><a data-yt target="_blank" rel="noopener">YouTube</a></li></ul></div>
       <div><h6>VGMStudios</h6><ul id="footApps"></ul></div>
     </div>
     <div class="copy"><span>© <span id="yr"></span> Views of VGM · VGMStudios. All rights reserved.</span><a data-ig target="_blank" rel="noopener">@viewsofvgm</a></div>
@@ -342,30 +407,95 @@ const APPS = [
    desc:"Your bucket list, organised — plan, track and tick off your dreams.", url:""},
 ];
 
+const YOUTUBE_URL = "https://www.youtube.com/@viewsofvgm/";
+/* Shown until api/followers.php returns the live number (needs Instagram Graph API setup). */
+const FOLLOWERS_FALLBACK = 395;
+
+/* Each category: Instagram highlight link + posts shown in its slideshow (newest first).
+   To add a post: paste "p/POSTID" or "reel/REELID" at the start of its list. */
+const HL = id => `https://www.instagram.com/stories/highlights/${id}/`;
 const CATEGORIES = [
-  {ico:"📰", name:"News", desc:"Important headlines, explained simply."},
-  {ico:"📈", name:"Trending Topics", desc:"What everyone's talking about right now.", tag:"HOT"},
-  {ico:"🎙", name:"MyViews", desc:"Our honest, personal take on the issue."},
-  {ico:"🤔", name:"Do You Agree?", desc:"We say it. You decide. Drop your vote.", tag:"POLL"},
-  {ico:"🌀", name:"What If", desc:"Big what-if scenarios, thought through."},
-  {ico:"⭐", name:"Review", desc:"Movies, series, gadgets and more — rated."},
-  {ico:"🎬", name:"OTT Update", desc:"New releases across streaming platforms.", tag:"WEEKLY"},
-  {ico:"➕", name:"& Much More", desc:"Quizzes, facts and community spotlights."},
+  {ico:"📈", name:"Trending", desc:"What everyone's talking about right now.", tag:"HOT", highlight:HL("18063150665196353"),
+   posts:["p/DfkGAr8zmBS","p/Df9UhmezUuj","p/Df9P8skhrIp","p/Df7jQSUTumF","p/Df61HFGBPqp","p/Df4-FYCz2Bt","p/Df4z25ozjoI","p/Df4yQwwz22H","p/Df1vHIhTKhp","p/Dfz-F_xTfg7"]},
+  {ico:"📰", name:"News", desc:"Important headlines and updates, explained simply.", highlight:HL("18105893036615207"),
+   posts:["p/Df61HFGBPqp","p/Df1PhL-z7c_","p/DfNRyTlTXQM","p/De55DtDz71N","p/Ddoto6Ezdj2","p/DdlaBbRzv0m","p/DdLl345TCSl","p/DdJFb-oz8qr","p/Dc5IjHDBH6d","p/DcC3hMUhESK"]},
+  {ico:"🎙", name:"MyViews", desc:"An honest, personal take on the issue.", highlight:HL("18367449148198489"),
+   posts:["p/Dd-xAYmz78S","p/DcOphYKz_s8","p/DcoUAyohIiK","p/DcjaPXAhj0G"]},
+  {ico:"🤔", name:"Do You Agree?", desc:"We say it. You decide. Drop your vote.", tag:"POLL", highlight:HL("18091148413735247"),
+   posts:["p/DdvvoSizSuJ","p/DduKckDTOgt","p/DcJjinfTmcg","p/Db6Iv1TzHL5","p/DbIKe5aBI06","p/DbFDOxHBGvz","p/Da2fjDYBFEP"]},
+  {ico:"🌀", name:"What If?", desc:"Big what-if scenarios, thought through.", highlight:HL("18020149352547157"),
+   posts:["p/Df1vHIhTKhp","p/DepN4OFzTy6","p/DdVxhDlTHbZ","p/Da2fjDYBFEP"]},
+  {ico:"⭐", name:"Review", desc:"Movies, series and more — rated honestly.", highlight:HL("18075693953288650"),
+   posts:["p/DfxaRxcze6U","p/DfWaLUkBVbr","p/DfPz8Sbzg3I","p/De_VdsSzpgp","p/De6MD9jToOy","p/De6K4bVzJJI","p/DelCeBuhMpr","p/DeQko3XznCP","p/Dd1bhkiT7E_"]},
+  {ico:"📺", name:"OTT Update", desc:"New releases across streaming platforms.", tag:"WEEKLY", highlight:HL("18000283352654937"),
+   posts:["p/Df1PhL-z7c_","p/DfWaLUkBVbr","p/DfPz8Sbzg3I","p/De_VdsSzpgp","p/De6MD9jToOy","p/De6K4bVzJJI","p/DelCeBuhMpr","p/DeLcuruTV7w","p/Dd9K5oYzuQf","p/Dd1bhkiT7E_"]},
+  {ico:"🎬", name:"Cinema", desc:"Trailers, box office and Tamil cinema talk.", highlight:HL("18079926613939078"),
+   posts:["p/Df1vHIhTKhp","p/DfxaRxcze6U","p/DfXjjEghMR4","p/DfR7wlSTcH6","p/DfPz8Sbzg3I","p/DfKeaoYzFB9","p/DfGdYCkzGEv","p/DfGaibYzNU7","p/De_VdsSzpgp","p/De6MD9jToOy"]},
+  {ico:"🚀", name:"Technology", desc:"Space, EVs, gadgets and what's next.", highlight:HL("17859157884479217"),
+   posts:["p/Df4-FYCz2Bt","p/DfpW_ETTz4U","p/Dfq3ljJzdcD","p/DfpGhU8hzlU","p/DfgSwsIh6io","reel/DeipzU2hJpX","p/DeCs8ECzgHQ","p/Dd57YjZTgHo","p/Dds2kK0Ten1","p/DcnWI6rBf79"]},
+  {ico:"🏛", name:"Politics", desc:"Policies and debates, without the noise.", highlight:HL("18143706877373557"),
+   posts:["p/Df61HFGBPqp","p/DfThmz-h2Yx","p/DfNVHgrTdYC","p/De_UJq1Tu9V","p/DeRn9ZdTQ_E","p/Ddwl0tuTu9E","p/Ddw0uo2zcj6","p/DdrKXu8zK40","p/DcJjinfTmcg"]},
+  {ico:"🤣", name:"Memes", desc:"Because some views are best as memes.", highlight:HL("18075253274008304"),
+   posts:["reel/DehcndRT3qM","p/DbvhDAlBYCk","p/DbdaHilTMMC","p/DbbQ4WcTqek"]},
+  {ico:"🚦", name:"Public Sense", desc:"Civic sense, safety and awareness.", highlight:HL("18142098346595999"),
+   posts:["p/DdL7rR_zmtG","reel/DcgjZ9LhVUy","p/DbtRe0tBPCJ","reel/DbsdoWVhq5R","p/DbFDOxHBGvz","p/Da2dQTeByKa"]},
 ];
 /* ============================================= */
 
 document.querySelectorAll("[data-ig]").forEach(a=>a.href=INSTAGRAM_URL);
+document.querySelectorAll("[data-yt]").forEach(a=>a.href=YOUTUBE_URL);
 document.getElementById("yr").textContent=new Date().getFullYear();
 
 const words=CATEGORIES.slice(0,7).map(c=>`<span>${c.name}</span>`).join("");
 document.getElementById("track").innerHTML=words+words;
 
-document.getElementById("cats").innerHTML=CATEGORIES.map(c=>`
-  <a class="cat reveal" href="${INSTAGRAM_URL}" target="_blank" rel="noopener">
+document.getElementById("cats").innerHTML=CATEGORIES.map((c,i)=>`
+  <button class="cat reveal" data-cat="${i}" type="button">
     ${c.tag?`<span class="tag">${c.tag}</span>`:""}
     <div><div class="ico">${c.ico}</div><h4>${c.name}</h4></div>
     <p>${c.desc}</p>
-  </a>`).join("");
+    <span class="cat-go">▶ ${c.posts.length} posts</span>
+  </button>`).join("");
+
+/* ---- Category slideshow ---- */
+const modal=document.getElementById("slides"), frame=document.getElementById("slideFrame"),
+      dots=document.getElementById("slideDots"), count=document.getElementById("slideCount");
+let cur=null, idx=0;
+function showSlide(n){
+  idx=(n+cur.posts.length)%cur.posts.length;
+  const url=`https://www.instagram.com/${cur.posts[idx]}/`;
+  frame.innerHTML=`<div class="slide-loading">Loading post…</div><iframe src="${url}embed/captioned/" allowfullscreen scrolling="yes" title="${cur.name} post ${idx+1}"></iframe>`;
+  frame.querySelector("iframe").onload=()=>frame.querySelector(".slide-loading")?.remove();
+  document.getElementById("slideOpen").href=url;
+  count.textContent=`${idx+1} / ${cur.posts.length}`;
+  dots.querySelectorAll("i").forEach((d,j)=>d.classList.toggle("on",j===idx));
+}
+function openCat(i){
+  cur=CATEGORIES[i];
+  document.getElementById("slideTitle").textContent=`${cur.ico} ${cur.name}`;
+  document.getElementById("slideHl").href=cur.highlight;
+  dots.innerHTML=cur.posts.map((_,j)=>`<i data-j="${j}"></i>`).join("");
+  modal.classList.add("open"); document.body.style.overflow="hidden";
+  showSlide(0);
+}
+function closeCat(){modal.classList.remove("open"); document.body.style.overflow=""; frame.innerHTML="";}
+document.getElementById("cats").addEventListener("click",e=>{const b=e.target.closest("[data-cat]"); if(b) openCat(+b.dataset.cat);});
+document.getElementById("slidePrev").onclick=()=>showSlide(idx-1);
+document.getElementById("slideNext").onclick=()=>showSlide(idx+1);
+dots.onclick=e=>{if(e.target.dataset.j) showSlide(+e.target.dataset.j);};
+modal.addEventListener("click",e=>{if(e.target===modal||e.target.closest("[data-close]")) closeCat();});
+addEventListener("keydown",e=>{if(!modal.classList.contains("open"))return; if(e.key==="Escape")closeCat(); if(e.key==="ArrowRight")showSlide(idx+1); if(e.key==="ArrowLeft")showSlide(idx-1);});
+let tx=null; const box=modal.querySelector(".slide-box");
+box.addEventListener("touchstart",e=>tx=e.touches[0].clientX,{passive:true});
+box.addEventListener("touchend",e=>{if(tx===null)return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50) showSlide(idx+(dx<0?1:-1)); tx=null;});
+
+/* ---- Live follower count ---- */
+function countUp(el,to){const t0=performance.now(),d=1400;(function f(t){const p=Math.min((t-t0)/d,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString("en-IN");if(p<1)requestAnimationFrame(f);})(t0);}
+const fEl=document.getElementById("followers"), fLive=document.getElementById("followersLive");
+countUp(fEl,FOLLOWERS_FALLBACK);
+fetch("api/followers.php",{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+  if(typeof d.followers==="number"){countUp(fEl,d.followers); fLive.hidden=false;}
+}).catch(()=>{});
 
 const playSvg=`<svg viewBox="0 0 24 24"><path fill="#00d26a" d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1z"/><path fill="#ffce00" d="m17.2 15.4-3.4-3.4 3.4-3.4 4 2.3c1.1.6 1.1 1.7 0 2.3z"/><path fill="#ff3a44" d="M17.2 15.4 13.8 12 3.6 22.2c.4.2.9.2 1.4-.1z"/><path fill="#3bccff" d="M17.2 8.6 5 1.9c-.5-.3-1-.3-1.4-.1L13.8 12z"/></svg>`;
 document.getElementById("appGrid").innerHTML=APPS.map(a=>`
