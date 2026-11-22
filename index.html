@@ -109,7 +109,9 @@
   .app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
   .app{background:var(--ink-2);border:1px solid #2c2c2c;border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;transition:.3s;position:relative}
   .app:hover{border-color:var(--yellow);transform:translateY(-6px)}
-  .app-icon{width:68px;height:68px;border-radius:20px;display:grid;place-items:center;font-size:32px;margin-bottom:22px}
+  .app-icon{width:84px;height:84px;margin-bottom:22px;border-radius:22px;filter:drop-shadow(0 10px 22px color-mix(in srgb,var(--glow) 55%,transparent));transition:.3s}
+  .app-icon img{width:100%;height:100%;object-fit:contain}
+  .app:hover .app-icon{transform:scale(1.08) rotate(-4deg)}
   .app h4{font-family:"Bebas Neue";font-size:34px;letter-spacing:.5px}
   .app .by{font-size:12px;color:#888;font-weight:600;letter-spacing:1px;text-transform:uppercase}
   .app p{color:#bdbdbd;font-size:14px;margin:14px 0 24px;flex:1}
@@ -319,15 +321,15 @@ const INSTAGRAM_POSTS = [
 
 /* Replace "url" with your exact Play Store app link when you have it. */
 const APPS = [
-  {name:"MyNotes", icon:"📝", color:"#ffd400", status:"live",
+  {name:"MyNotes", icon:"assets/apps/mynotes.png", color:"#c8f2dc", status:"live",
    desc:"Capture ideas, lists and thoughts in a clean, distraction-free notebook.",
    url:"https://play.google.com/store/search?q=VGMStudios%20MyNotes&c=apps"},
-  {name:"HabitSeven", icon:"🔥", color:"#ff6b3d", status:"live",
+  {name:"HabitSeven", icon:"assets/apps/habitseven.png", color:"#5b21b6", status:"live",
    desc:"Build better habits seven days at a time with streaks and simple tracking.",
    url:"https://play.google.com/store/search?q=VGMStudios%20HabitSeven&c=apps"},
-  {name:"ThilluMullu", icon:"🎭", color:"#8b5cf6", status:"soon",
-   desc:"Something fun is brewing. Stay tuned for the launch.", url:""},
-  {name:"DreamBucket", icon:"🪣", color:"#22c3a6", status:"soon",
+  {name:"ThilluMullu", icon:"assets/apps/thillumullu.webp", color:"#7c3aed", status:"soon",
+   desc:"Tamil Pictionary! Draw, guess and laugh together with friends and family.", url:""},
+  {name:"DreamBucket", icon:"assets/apps/dreambucket.webp", color:"#a78bfa", status:"soon",
    desc:"Your bucket list, organised — plan, track and tick off your dreams.", url:""},
 ];
 
@@ -360,7 +362,7 @@ const playSvg=`<svg viewBox="0 0 24 24"><path fill="#00d26a" d="M3.6 1.8 13.8 12
 document.getElementById("appGrid").innerHTML=APPS.map(a=>`
   <div class="app reveal">
     <span class="status ${a.status==="live"?"live":"soon"}">${a.status==="live"?"● LIVE":"COMING SOON"}</span>
-    <div class="app-icon" style="background:${a.color}">${a.icon}</div>
+    <div class="app-icon" style="--glow:${a.color}"><img src="${a.icon}" alt="${a.name} app icon" loading="lazy"></div>
     <span class="by">VGMStudios</span>
     <h4>${a.name}</h4>
     <p>${a.desc}</p>
