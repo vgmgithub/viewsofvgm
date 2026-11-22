@@ -11,12 +11,6 @@ Official website for Views of VGM (podcast, Instagram, VGMStudios apps). Static 
 Each category in `CATEGORIES` (index.html) has an Instagram highlight link and a `posts` list
 (`"p/POSTID"` or `"reel/REELID"`, newest first) shown in the on-site slideshow.
 
-## Live follower count
-`api/followers.php` (PHP) returns the follower count from the official Instagram Graph API.
-Copy `api/config.example.php` to `api/config.php` and set `IG_USER_ID` and `IG_ACCESS_TOKEN`
-(needs a Business/Creator Instagram account linked to a Facebook Page). Until then the page shows
-`FOLLOWERS_FALLBACK` from index.html.
-
-## Updating the follower count
-Edit `data/stats.json` (`followers`, `updated`) and push. The page reads this file fresh on every refresh,
-so no HTML change is needed. If `api/followers.php` is configured with the Graph API, the live value wins.
+## Follower count
+`data/stats.json` holds the follower count. The page reads it fresh on every refresh. A daily scheduled
+task updates it (and adds new posts to categories) and pushes. No backend needed: the site is static files.

@@ -270,7 +270,7 @@
         <span>Hosted by <b>VGM</b> · creator &amp; podcaster</span>
       </div>
       <div class="stats">
-        <div><b><span id="followers">0</span>+</b><span>Instagram followers <em class="live-dot" id="followersLive" hidden>LIVE</em></span></div>
+        <div><b><span id="followers">0</span>+</b><span>Instagram followers </span></div>
         <div><b>13</b><span>Content categories</span></div>
         <div><b>4</b><span>VGMStudios apps</span></div>
         <div><b>2</b><span>Live on Play Store</span></div>
@@ -417,8 +417,7 @@ const APPS = [
 ];
 
 const YOUTUBE_URL = "https://www.youtube.com/@viewsofvgm/";
-/* Follower count is read from data/stats.json on every refresh (or live from api/followers.php
-   once the Instagram Graph API is set up). This number is only used if both fail. */
+/* Follower count is read from data/stats.json on every refresh. This number is only used if that fails. */
 const FOLLOWERS_FALLBACK = 395;
 
 /* Each category: Instagram highlight link + posts shown in its slideshow (newest first).
@@ -503,12 +502,9 @@ box.addEventListener("touchend",e=>{if(tx===null)return; const dx=e.changedTouch
 
 /* ---- Live follower count ---- */
 function countUp(el,to){const t0=performance.now(),d=1400;(function f(t){const p=Math.min((t-t0)/d,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString("en-IN");if(p<1)requestAnimationFrame(f);})(t0);}
-const fEl=document.getElementById("followers"), fLive=document.getElementById("followersLive");
-/* On every page load: try the live API, otherwise read data/stats.json (fresh, never cached). */
-const getJSON=u=>fetch(`${u}?t=${Date.now()}`,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject());
-getJSON("api/followers.php")
-  .then(d=>{if(typeof d.followers!=="number")throw 0; fLive.hidden=false; return d;})
-  .catch(()=>getJSON("data/stats.json"))
+const fEl=document.getElementById("followers");
+/* On every page load: read data/stats.json fresh (never cached). Updated daily by a scheduled task. */
+fetch(`data/stats.json?t=${Date.now()}`,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject())
   .then(d=>countUp(fEl,typeof d.followers==="number"?d.followers:FOLLOWERS_FALLBACK))
   .catch(()=>countUp(fEl,FOLLOWERS_FALLBACK));
 
