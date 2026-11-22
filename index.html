@@ -408,7 +408,8 @@ const APPS = [
 ];
 
 const YOUTUBE_URL = "https://www.youtube.com/@viewsofvgm/";
-/* Shown until api/followers.php returns the live number (needs Instagram Graph API setup). */
+/* Follower count is read from data/stats.json on every refresh (or live from api/followers.php
+   once the Instagram Graph API is set up). This number is only used if both fail. */
 const FOLLOWERS_FALLBACK = 395;
 
 /* Each category: Instagram highlight link + posts shown in its slideshow (newest first).
@@ -492,10 +493,13 @@ box.addEventListener("touchend",e=>{if(tx===null)return; const dx=e.changedTouch
 /* ---- Live follower count ---- */
 function countUp(el,to){const t0=performance.now(),d=1400;(function f(t){const p=Math.min((t-t0)/d,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString("en-IN");if(p<1)requestAnimationFrame(f);})(t0);}
 const fEl=document.getElementById("followers"), fLive=document.getElementById("followersLive");
-countUp(fEl,FOLLOWERS_FALLBACK);
-fetch("api/followers.php",{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
-  if(typeof d.followers==="number"){countUp(fEl,d.followers); fLive.hidden=false;}
-}).catch(()=>{});
+/* On every page load: try the live API, otherwise read data/stats.json (fresh, never cached). */
+const getJSON=u=>fetch(`${u}?t=${Date.now()}`,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject());
+getJSON("api/followers.php")
+  .then(d=>{if(typeof d.followers!=="number")throw 0; fLive.hidden=false; return d;})
+  .catch(()=>getJSON("data/stats.json"))
+  .then(d=>countUp(fEl,typeof d.followers==="number"?d.followers:FOLLOWERS_FALLBACK))
+  .catch(()=>countUp(fEl,FOLLOWERS_FALLBACK));
 
 const playSvg=`<svg viewBox="0 0 24 24"><path fill="#00d26a" d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1z"/><path fill="#ffce00" d="m17.2 15.4-3.4-3.4 3.4-3.4 4 2.3c1.1.6 1.1 1.7 0 2.3z"/><path fill="#ff3a44" d="M17.2 15.4 13.8 12 3.6 22.2c.4.2.9.2 1.4-.1z"/><path fill="#3bccff" d="M17.2 8.6 5 1.9c-.5-.3-1-.3-1.4-.1L13.8 12z"/></svg>`;
 document.getElementById("appGrid").innerHTML=APPS.map(a=>`
