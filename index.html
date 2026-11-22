@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Views of VGM | Every Views & Opinion Matters</title>
+<meta name="description" content="Views of VGM — podcast, news, trending topics, reviews and OTT updates. Home of VGMStudios apps: MyNotes, HabitSeven, ThilluMullu and DreamBucket.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0d0d; --ink-2:#1b1b1b; --paper:#ffffff; --cream:#f6f5f1;
+    --yellow:#ffd400; --yellow-2:#ffb800; --muted:#6b6b6b; --line:#e7e5df;
+    --radius:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  .display{font-family:"Bebas Neue",Impact,sans-serif;letter-spacing:.5px;line-height:.95}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+  .eyebrow::before{content:"";width:28px;height:3px;background:var(--yellow);border-radius:3px}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font-weight:700;font-size:15px;transition:.25s;border:2px solid var(--ink);cursor:pointer}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:var(--yellow);color:var(--ink);transform:translateY(-2px)}
+  .btn-ghost{background:transparent}
+  .btn-ghost:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+  .btn svg{width:18px;height:18px}
+
+  /* NAV */
+  header{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s}
+  header.scrolled{background:rgba(255,255,255,.9);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Bebas Neue";font-size:28px;letter-spacing:1px}
+  .brand .dot{width:34px;height:34px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;border:3px solid var(--ink)}
+  .brand .dot svg{width:16px;height:16px}
+  .links{display:flex;gap:30px;font-weight:600;font-size:15px}
+  .links a{position:relative}
+  .links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:3px;background:var(--yellow);transition:.25s;border-radius:3px}
+  .links a:hover::after{width:100%}
+  .menu-btn{display:none;background:none;border:0;cursor:pointer}
+  .menu-btn svg{width:28px;height:28px}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 60px;background:var(--paper);position:relative}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center}
+  .hero h1{font-size:clamp(56px,9vw,120px)}
+  .hero h1 .hl{background:linear-gradient(transparent 60%,var(--yellow) 60%);padding:0 6px}
+  .hero p.lead{font-size:18px;color:#3a3a3a;max-width:520px;margin:22px 0 32px}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-logo{mix-blend-mode:multiply;animation:pulse 5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  .stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap}
+  .stats b{display:block;font-family:"Bebas Neue";font-size:40px;line-height:1}
+  .stats span{font-size:13px;color:var(--muted);font-weight:600}
+
+  /* MARQUEE */
+  .marquee{background:var(--ink);color:#fff;overflow:hidden;padding:18px 0;border-block:4px solid var(--yellow)}
+  .track{display:flex;gap:48px;width:max-content;animation:scroll 35s linear infinite}
+  .track span{font-family:"Bebas Neue";font-size:30px;letter-spacing:1px;white-space:nowrap;display:flex;align-items:center;gap:48px}
+  .track span::after{content:"✦";color:var(--yellow);font-size:20px}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  section{padding:100px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(44px,6vw,72px);margin-top:10px}
+  .sec-head p{max-width:440px;color:var(--muted)}
+
+  /* ABOUT */
+  .about{background:var(--cream)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .about-card{background:var(--ink);color:#fff;border-radius:var(--radius);padding:44px;position:relative;overflow:hidden}
+  .about-card::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:var(--yellow);opacity:.95}
+  .about-card .mic{position:relative;width:64px;height:64px;border-radius:18px;background:var(--yellow);display:grid;place-items:center;margin-bottom:26px}
+  .about-card h3{font-size:46px;position:relative}
+  .about-card p{color:#cfcfcf;position:relative;margin-top:14px}
+  .about-text h2{font-size:clamp(44px,6vw,68px);margin:10px 0 20px}
+  .about-text p{color:#3a3a3a;margin-bottom:16px}
+  .host{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--yellow);aspect-ratio:928/1020;box-shadow:12px 12px 0 var(--ink)}
+  .host img{width:100%;height:100%;object-fit:cover;object-position:top center} /* crops bottom strip (removes watermark) */
+  .host figcaption{position:absolute;left:16px;bottom:16px;background:var(--ink);color:#fff;padding:8px 16px;border-radius:999px;font-weight:700;font-size:14px}
+  .host figcaption span{color:var(--yellow)}
+  .host.missing img{display:none}
+  .host.missing::before{content:"🎙";position:absolute;inset:0;display:grid;place-items:center;font-size:90px}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .pillar{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+  .pillar b{display:block;font-size:15px}
+  .pillar span{font-size:13px;color:var(--muted)}
+
+  /* CATEGORIES */
+  .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .cat{border:2px solid var(--ink);border-radius:var(--radius);padding:28px 24px;background:#fff;transition:.3s;position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:space-between}
+  .cat:hover{background:var(--ink);color:#fff;transform:translateY(-6px);box-shadow:8px 8px 0 var(--yellow)}
+  .cat .ico{font-size:34px}
+  .cat h4{font-family:"Bebas Neue";font-size:32px;letter-spacing:.5px;margin-top:18px}
+  .cat p{font-size:14px;color:var(--muted);transition:.3s}
+  .cat:hover p{color:#bdbdbd}
+  .cat .tag{position:absolute;top:22px;right:22px;font-size:11px;font-weight:800;letter-spacing:1.5px;background:var(--yellow);color:var(--ink);padding:4px 10px;border-radius:999px}
+
+  /* APPS */
+  .apps{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+  .apps .eyebrow{color:#aaa}
+  .apps .sec-head p{color:#aaa}
+  .app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .app{background:var(--ink-2);border:1px solid #2c2c2c;border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;transition:.3s;position:relative}
+  .app:hover{border-color:var(--yellow);transform:translateY(-6px)}
+  .app-icon{width:68px;height:68px;border-radius:20px;display:grid;place-items:center;font-size:32px;margin-bottom:22px}
+  .app h4{font-family:"Bebas Neue";font-size:34px;letter-spacing:.5px}
+  .app .by{font-size:12px;color:#888;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+  .app p{color:#bdbdbd;font-size:14px;margin:14px 0 24px;flex:1}
+  .status{position:absolute;top:24px;right:24px;font-size:11px;font-weight:800;letter-spacing:1px;padding:5px 10px;border-radius:999px}
+  .live{background:#1f3d23;color:#7ee28a}
+  .soon{background:#3d3410;color:var(--yellow)}
+  .play{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);padding:10px 16px;border-radius:12px;font-weight:700;font-size:14px;transition:.25s;align-self:flex-start}
+  .play:hover{background:var(--yellow)}
+  .play svg{width:20px;height:20px}
+  .notify{display:inline-flex;align-items:center;gap:8px;border:1px dashed #555;color:#aaa;padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;align-self:flex-start}
+
+  /* INSTAGRAM */
+  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .ig-grid .instagram-media{min-width:0!important;width:100%!important;margin:0!important;border-radius:16px!important}
+  .ig-cta{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;background:var(--cream);border-radius:28px;padding:44px;margin-top:40px}
+  .ig-cta h3{font-size:clamp(40px,5vw,60px)}
+  .ig-cta p{color:#3a3a3a;margin:14px 0 26px}
+  .qr{background:#262828;border-radius:22px;padding:18px;max-width:260px;justify-self:center;transform:rotate(3deg);transition:.3s;box-shadow:0 20px 40px rgba(0,0,0,.18)}
+  .qr:hover{transform:rotate(0) scale(1.03)}
+  .qr img{border-radius:12px}
+  .ig-placeholder{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .ph{aspect-ratio:1;border-radius:20px;background:var(--ink);color:#fff;padding:26px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:.3s}
+  .ph:hover{transform:scale(1.02)}
+  .ph:nth-child(2n){background:var(--yellow);color:var(--ink)}
+  .ph:nth-child(3n){background:var(--cream);color:var(--ink);border:2px solid var(--ink)}
+  .ph small{font-weight:800;letter-spacing:2px;font-size:12px}
+  .ph h5{font-family:"Bebas Neue";font-size:clamp(30px,3.4vw,44px);line-height:1}
+  .ph .go{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#bdbdbd;padding:70px 0 30px}
+  .foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  footer .brand{color:#fff}
+  footer h6{color:#fff;font-size:14px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+  footer ul{list-style:none;display:grid;gap:10px;font-size:15px}
+  footer a:hover{color:var(--yellow)}
+  .copy{border-top:1px solid #2a2a2a;margin-top:50px;padding-top:24px;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:980px){
+    .hero-grid,.about-grid,.ig-cta,.foot{grid-template-columns:1fr}
+    .hero-logo{order:-1;max-width:460px;margin:0 auto}
+    .cats,.app-grid{grid-template-columns:repeat(2,1fr)}
+    .ig-grid,.ig-placeholder{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:720px){
+    .links{position:fixed;top:72px;left:0;right:0;background:#fff;flex-direction:column;padding:24px 20px;gap:18px;box-shadow:0 10px 30px rgba(0,0,0,.08);display:none}
+    .links.open{display:flex}
+    .menu-btn{display:block}
+    section{padding:70px 0}
+    .cats,.app-grid,.ig-grid,.ig-placeholder,.pillars{grid-template-columns:1fr}
+    .ig-cta{padding:28px}
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <nav class="wrap">
+    <a href="#" class="brand"><span class="dot"><svg viewBox="0 0 24 24" fill="#0d0d0d"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></span>Views of VGM</a>
+    <div class="links" id="links">
+      <a href="#about">About</a>
+      <a href="#categories">Shows</a>
+      <a href="#apps">VGMStudios</a>
+      <a href="#instagram">Instagram</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Podcast · News · Opinions</span>
+      <h1 class="display">Every view.<br>Every <span class="hl">opinion</span><br>matters.</h1>
+      <p class="lead">Views of VGM started as a podcast and grew into a place for news, trending topics, honest reviews and bold opinions — and the home of VGMStudios apps.</p>
+      <div class="hero-actions">
+        <a class="btn btn-dark" data-ig target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>Follow @viewsofvgm</a>
+        <a class="btn btn-ghost" href="#apps">Explore our apps</a>
+      </div>
+      <div class="stats">
+        <div><b>7+</b><span>Content categories</span></div>
+        <div><b>4</b><span>VGMStudios apps</span></div>
+        <div><b>2</b><span>Live on Play Store</span></div>
+      </div>
+    </div>
+    <img class="hero-logo reveal" src="assets/logo.png" alt="Views of VGM logo">
+  </div>
+</section>
+
+<div class="marquee"><div class="track" id="track"></div></div>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="reveal" style="display:grid;gap:24px">
+    <figure class="host" id="host">
+      <img src="assets/host.jpg" alt="Host of Views of VGM" onerror="this.parentNode.classList.add('missing')">
+      <figcaption>Your host · <span>VGM</span></figcaption>
+    </figure>
+    <div class="about-card">
+      <div class="mic"><svg width="30" height="30" viewBox="0 0 24 24" fill="#0d0d0d"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></div>
+      <h3 class="display">Born as a podcast.</h3>
+      <p>We started Views of VGM to have real conversations — the kind where every voice gets heard. Today the mic is still on, just across more channels.</p>
+    </div>
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">About us</span>
+      <h2 class="display">Real talk.<br>Your take.</h2>
+      <p>From breaking news and trending debates to “What If” scenarios and OTT drops, we break things down simply and ask the question that matters most: <b>Do you agree?</b></p>
+      <p>Under the same roof, <b>VGMStudios</b> builds simple, useful apps for everyday life.</p>
+      <div class="pillars">
+        <div class="pillar"><b>🎙 Podcast</b><span>Where it all began</span></div>
+        <div class="pillar"><b>📲 Instagram</b><span>Daily posts & reels</span></div>
+        <div class="pillar"><b>🛠 Apps</b><span>by VGMStudios</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="categories">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><span class="eyebrow">What we post</span><h2 class="display">Our shows & series</h2></div>
+      <p>Pick a format and jump in. Every post is built to start a conversation in the comments.</p>
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+</section>
+
+<section class="apps" id="apps">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><span class="eyebrow">VGMStudios</span><h2 class="display">Apps we've built</h2></div>
+      <p>Small, focused apps that help you think clearly, build habits and dream bigger.</p>
+    </div>
+    <div class="app-grid" id="appGrid"></div>
+  </div>
+</section>
+
+<section id="instagram">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><span class="eyebrow">@viewsofvgm</span><h2 class="display">Latest on Instagram</h2></div>
+      <p>Fresh takes every week. Tap any post to open it on Instagram and share your view.</p>
+    </div>
+    <div id="igFeed"></div>
+    <div class="ig-cta reveal">
+      <div>
+        <h3 class="display">Scan. Follow.<br>Join the debate.</h3>
+        <p>News, trending topics, MyViews, Do You Agree?, What If, Reviews and OTT Updates — all on our Instagram.</p>
+        <a class="btn btn-dark" data-ig target="_blank" rel="noopener">Open Instagram →</a>
+      </div>
+      <a class="qr" data-ig target="_blank" rel="noopener"><img src="assets/instagram-qr.jpg" alt="Instagram QR code for @viewsofvgm"></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#" class="brand"><span class="dot"><svg viewBox="0 0 24 24" fill="#0d0d0d"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></span>Views of VGM</a>
+        <p style="margin-top:14px;max-width:340px">Every views &amp; opinion matters. A podcast-born media brand and the home of VGMStudios.</p>
+      </div>
+      <div><h6>Explore</h6><ul><li><a href="#about">About</a></li><li><a href="#categories">Shows</a></li><li><a href="#apps">Apps</a></li><li><a href="#instagram">Instagram</a></li></ul></div>
+      <div><h6>VGMStudios</h6><ul id="footApps"></ul></div>
+    </div>
+    <div class="copy"><span>© <span id="yr"></span> Views of VGM · VGMStudios. All rights reserved.</span><a data-ig target="_blank" rel="noopener">@viewsofvgm</a></div>
+  </div>
+</footer>
+
+<script>
+/* ================= EDIT HERE ================= */
+const INSTAGRAM_URL = "https://www.instagram.com/viewsofvgm/";
+
+/* Paste Instagram post/reel links here to embed them (open post → ⋯ → Copy link).
+   Example: "https://www.instagram.com/p/ABC123xyz/"  or  "https://www.instagram.com/reel/XYZ789/" */
+const INSTAGRAM_POSTS = [
+];
+
+/* Replace "url" with your exact Play Store app link when you have it. */
+const APPS = [
+  {name:"MyNotes", icon:"📝", color:"#ffd400", status:"live",
+   desc:"Capture ideas, lists and thoughts in a clean, distraction-free notebook.",
+   url:"https://play.google.com/store/search?q=VGMStudios%20MyNotes&c=apps"},
+  {name:"HabitSeven", icon:"🔥", color:"#ff6b3d", status:"live",
+   desc:"Build better habits seven days at a time with streaks and simple tracking.",
+   url:"https://play.google.com/store/search?q=VGMStudios%20HabitSeven&c=apps"},
+  {name:"ThilluMullu", icon:"🎭", color:"#8b5cf6", status:"soon",
+   desc:"Something fun is brewing. Stay tuned for the launch.", url:""},
+  {name:"DreamBucket", icon:"🪣", color:"#22c3a6", status:"soon",
+   desc:"Your bucket list, organised — plan, track and tick off your dreams.", url:""},
+];
+
+const CATEGORIES = [
+  {ico:"📰", name:"News", desc:"Important headlines, explained simply."},
+  {ico:"📈", name:"Trending Topics", desc:"What everyone's talking about right now.", tag:"HOT"},
+  {ico:"🎙", name:"MyViews", desc:"Our honest, personal take on the issue."},
+  {ico:"🤔", name:"Do You Agree?", desc:"We say it. You decide. Drop your vote.", tag:"POLL"},
+  {ico:"🌀", name:"What If", desc:"Big what-if scenarios, thought through."},
+  {ico:"⭐", name:"Review", desc:"Movies, series, gadgets and more — rated."},
+  {ico:"🎬", name:"OTT Update", desc:"New releases across streaming platforms.", tag:"WEEKLY"},
+  {ico:"➕", name:"& Much More", desc:"Quizzes, facts and community spotlights."},
+];
+/* ============================================= */
+
+document.querySelectorAll("[data-ig]").forEach(a=>a.href=INSTAGRAM_URL);
+document.getElementById("yr").textContent=new Date().getFullYear();
+
+const words=CATEGORIES.slice(0,7).map(c=>`<span>${c.name}</span>`).join("");
+document.getElementById("track").innerHTML=words+words;
+
+document.getElementById("cats").innerHTML=CATEGORIES.map(c=>`
+  <a class="cat reveal" href="${INSTAGRAM_URL}" target="_blank" rel="noopener">
+    ${c.tag?`<span class="tag">${c.tag}</span>`:""}
+    <div><div class="ico">${c.ico}</div><h4>${c.name}</h4></div>
+    <p>${c.desc}</p>
+  </a>`).join("");
+
+const playSvg=`<svg viewBox="0 0 24 24"><path fill="#00d26a" d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1z"/><path fill="#ffce00" d="m17.2 15.4-3.4-3.4 3.4-3.4 4 2.3c1.1.6 1.1 1.7 0 2.3z"/><path fill="#ff3a44" d="M17.2 15.4 13.8 12 3.6 22.2c.4.2.9.2 1.4-.1z"/><path fill="#3bccff" d="M17.2 8.6 5 1.9c-.5-.3-1-.3-1.4-.1L13.8 12z"/></svg>`;
+document.getElementById("appGrid").innerHTML=APPS.map(a=>`
+  <div class="app reveal">
+    <span class="status ${a.status==="live"?"live":"soon"}">${a.status==="live"?"● LIVE":"COMING SOON"}</span>
+    <div class="app-icon" style="background:${a.color}">${a.icon}</div>
+    <span class="by">VGMStudios</span>
+    <h4>${a.name}</h4>
+    <p>${a.desc}</p>
+    ${a.status==="live"
+      ?`<a class="play" href="${a.url}" target="_blank" rel="noopener">${playSvg}Get it on Google Play</a>`
+      :`<a class="notify" href="${INSTAGRAM_URL}" target="_blank" rel="noopener">🔔 Follow for launch news</a>`}
+  </div>`).join("");
+document.getElementById("footApps").innerHTML=APPS.map(a=>`<li><a href="${a.url||'#apps'}" ${a.url?'target="_blank" rel="noopener"':''}>${a.name}${a.status==="soon"?" (soon)":""}</a></li>`).join("");
+
+const feed=document.getElementById("igFeed");
+if(INSTAGRAM_POSTS.length){
+  feed.className="ig-grid";
+  feed.innerHTML=INSTAGRAM_POSTS.map(u=>`<blockquote class="instagram-media" data-instgrm-permalink="${u}?utm_source=ig_embed" data-instgrm-version="14"><a href="${u}" target="_blank" rel="noopener">View this post on Instagram</a></blockquote>`).join("");
+  const s=document.createElement("script");s.async=true;s.src="https://www.instagram.com/embed.js";document.body.appendChild(s);
+}else{
+  feed.className="ig-placeholder";
+  const tiles=[["TRENDING","What's everyone talking about this week?"],["DO YOU AGREE?","We said it. Now it's your turn."],["OTT UPDATE","This week's must-watch releases."],["WHAT IF","What if the internet went off for a day?"],["MYVIEWS","Our honest take, no filters."],["REVIEW","Worth your time — or skip it?"]];
+  feed.innerHTML=tiles.map(t=>`<a class="ph reveal" href="${INSTAGRAM_URL}" target="_blank" rel="noopener"><small>${t[0]}</small><h5>${t[1]}</h5><span class="go">See on Instagram →</span></a>`).join("");
+}
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+const header=document.getElementById("top");
+addEventListener("scroll",()=>header.classList.toggle("scrolled",scrollY>20));
+const links=document.getElementById("links");
+document.getElementById("menuBtn").onclick=()=>links.classList.toggle("open");
+links.querySelectorAll("a").forEach(a=>a.onclick=()=>links.classList.remove("open"));
+</script>
+</body>
+</html>
