@@ -151,8 +151,11 @@
   .notify{display:inline-flex;align-items:center;gap:8px;border:1px dashed #555;color:#aaa;padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;align-self:flex-start}
 
   /* INSTAGRAM */
-  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
-  .ig-grid .instagram-media{min-width:0!important;width:100%!important;margin:0!important;border-radius:16px!important}
+  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .ig-card{position:relative;height:540px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.06);transition:.3s}
+  .ig-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.12)}
+  .ig-card iframe{width:100%;height:100%;border:0;display:block}
+  .ig-rank{position:absolute;bottom:12px;right:12px;z-index:2;background:var(--yellow);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:1px;padding:5px 10px;border-radius:999px;text-transform:uppercase;pointer-events:none}
   .ig-cta{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;background:var(--cream);border-radius:28px;padding:44px;margin-top:40px}
   .ig-cta h3{font-size:clamp(40px,5vw,60px)}
   .ig-cta p{color:#3a3a3a;margin:14px 0 26px}
@@ -185,6 +188,7 @@
     .hero-logo{order:-1;max-width:460px;margin:0 auto}
     .cats,.app-grid{grid-template-columns:repeat(2,1fr)}
     .ig-grid,.ig-placeholder{grid-template-columns:repeat(2,1fr)}
+    .ig-grid .ig-card:last-child{grid-column:1/-1;max-width:calc(50% - 10px);width:100%;justify-self:center}
   }
   @media (max-width:720px){
     .links{position:fixed;top:72px;left:0;right:0;background:#fff;flex-direction:column;padding:24px 20px;gap:18px;box-shadow:0 10px 30px rgba(0,0,0,.08);display:none}
@@ -193,6 +197,8 @@
     section{padding:70px 0}
     .cats,.app-grid,.ig-grid,.ig-placeholder,.pillars{grid-template-columns:1fr}
     .ig-cta{padding:28px}
+    .ig-grid .ig-card:last-child{max-width:none}
+    .ig-card{height:min(540px,calc(100vw + 120px))}
     .links a{font-size:18px;padding:6px 0}
     .hero{min-height:auto;padding:96px 0 50px}
     .hero h1{font-size:clamp(52px,16vw,76px)}
@@ -382,9 +388,10 @@ const INSTAGRAM_URL = "https://www.instagram.com/viewsofvgm/";
 /* "Most loved" section: your 3 recent posts with the biggest response (keep it to 3).
    Paste post/reel links (open post → ⋯ → Copy link). Picked 22 Nov 2026 from the last ~5 weeks. */
 const INSTAGRAM_POSTS = [
-  "https://www.instagram.com/p/De55DtDz71N/",  // Chef Dhamu — 149 likes
   "https://www.instagram.com/p/De6K4bVzJJI/",  // OTT update — 55 likes, 3 comments
   "https://www.instagram.com/p/DfNRyTlTXQM/",  // Bigg Boss — 41 likes
+  "https://www.instagram.com/p/DepN4OFzTy6/",  // What If IPL 2027 — 26 likes
+  // (RIP / tribute posts are left out on purpose)
 ].slice(0, 3);
 
 /* Replace "url" with your exact Play Store app link when you have it. */
@@ -514,8 +521,7 @@ document.getElementById("footApps").innerHTML=APPS.map(a=>`<li><a href="${a.url|
 const feed=document.getElementById("igFeed");
 if(INSTAGRAM_POSTS.length){
   feed.className="ig-grid";
-  feed.innerHTML=INSTAGRAM_POSTS.map(u=>`<blockquote class="instagram-media" data-instgrm-permalink="${u}?utm_source=ig_embed" data-instgrm-version="14"><a href="${u}" target="_blank" rel="noopener">View this post on Instagram</a></blockquote>`).join("");
-  const s=document.createElement("script");s.async=true;s.src="https://www.instagram.com/embed.js";document.body.appendChild(s);
+  feed.innerHTML=INSTAGRAM_POSTS.map((u,i)=>`<div class="ig-card reveal"><span class="ig-rank">#${i+1} most loved</span><iframe src="${u.replace(/\/?$/,'/')}embed/" loading="lazy" scrolling="no" title="Instagram post ${i+1}"></iframe></div>`).join("");
 }else{
   feed.className="ig-placeholder";
   const tiles=[["TRENDING","What's everyone talking about this week?"],["DO YOU AGREE?","We said it. Now it's your turn."],["OTT UPDATE","This week's must-watch releases."],["WHAT IF","What if the internet went off for a day?"],["MYVIEWS","Our honest take, no filters."],["REVIEW","Worth your time — or skip it?"]];
